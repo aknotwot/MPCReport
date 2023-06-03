@@ -2,8 +2,8 @@
 Pixinsight scripts producing Minor Planet Center reports. 
 From pictures .fits, .fit or .xisf with FITS Headers "DATE-OBS" a "EXPTIME", and from .csv files produced with DynamicPSF including view names, RA and DEC values, the MPCReport.js, produce a MPC Report compliante with MPC1992 format.
 ***
-Version 0.1 - Initial version - A Prototype still needed a lot of improvement. 
-work with Pixinsight 1.8.9-1
+Version 0.1 - Initial version - A Prototype still needed a lot of improvements. 
+Functionnal with Pixinsight 1.8.9-1
 ***
 1/ plate solve your pictures, 
 2/ record positions of the minor planet, on your different picture using DynamicPSF process
