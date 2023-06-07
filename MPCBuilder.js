@@ -21,7 +21,7 @@
 
 #define DAY_IN_SECONDS 86400
 #define MINUTE_IN_SEC 60
-#define MPBUILDERVERSION "0.1"
+#define MPBUILDERVERSION "0.1.1"
 
 
 
@@ -50,11 +50,13 @@ var comment = "This is a test observation.";
 var observationCount = 1;
 var ackWords = "NEW SITE XXX - batch 001 - 2023-06-03 10:50:15 GMT+2";
 var acknowledgmentEmails = "astronomer@cfarooftop.org";
-
+// OTHERS TO DEFINE 
+var reportSavePath = "Z:/travaux/asteroids/script/MPCReport/tests/MPCReport.";
+var debugMode = false; // put to true to activate debug mode
+/*********************************************************************************/
 var magnitudeBand = "B"; // TODO 'T' for
 var observedMagnitude = "12.34"; // "observed magnitude" - usually at 0.1
 
-/*********************************************************************************/
 
 
 //Divers
@@ -81,7 +83,6 @@ var buildADESXML = false;
 var buildADESPSV = false;
 var buildMPC1992 = false;
 var selectedFormat = false;
-var debugMode = false; // put to true to activate debug mode
 var adesPSVContent = "";
 var adesXMLContent = "";
 var MPC1992Content = "";
@@ -126,13 +127,16 @@ function parseRADEC(posSTR,typePos) {
       let tmp = "";
       if ((pos[m].charAt(0) == "+") || (pos[m].charAt(0) == "-")) { // DEC first token sDD ?
          logDebug("token + - : ");
-         if ((pos[m].length-1) < 3){ // if length < 3 : only one digit
+        if ((pos[m].length) < 3){ // if length < 3 : only one digit
                tmp = "0" + pos[m].charAt(1);
+	       logDebug("posm[m] : " +  pos[m].charAt(1));
                tmp = pos[m].charAt(0) + tmp;
+	       logDebug("posm[m] : " +  tmp);
+			   
             }
-         else {
-              tmp = "0" + pos[m].substring(1,pos[m].length-1);
-              tmp = pos[m].charAt(0) + tmp;
+         else { // default - error
+	       tmp = pos[m];
+               logDebug("posm[m] sans signe : " +  tmp );
          }
       }
       else //contains nor + and -
@@ -195,7 +199,7 @@ function saveReport(isbuild) {
 
 // Save the content to a file
 var formatExtension = isbuild === 0 ? "xml" : isbuild === 1 ? "psv" : "txt";
-var filePath = "Z:/travaux/asteroids/batch_0001/MPCReport." + formatExtension;
+var filePath = reportSavePath + formatExtension;
 var file = new File;
 file.createForWriting(filePath);
 
